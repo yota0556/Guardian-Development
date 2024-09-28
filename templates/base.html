@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Guardian Development | {% block title %}{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.png') }}" >
+
+    <!-- Android and other devices -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.png') }}" >
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon.png') }}" >
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='favicon.png') }}" >
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ url_for('static', filename='favicon.png') }}" >
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-square70x70logo" content="{{ url_for('static', filename='favicon.png') }}" >
+    <meta name="msapplication-square150x150logo" content="{{ url_for('static', filename='favicon.png') }}" >
+    <meta name="msapplication-square310x310logo" content="{{ url_for('static', filename='favicon.png') }}" >
+    <meta name="msapplication-wide310x150logo" content="{{ url_for('static', filename='favicon.png') }}" >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Base style for editable fields, looks like a normal table cell initially */
+        .editable {
+            background-color: #212224; /* Match default table cell background */
+            color: white; /* Match default text color */
+            border: 1px solid white; /* Match table borders */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            cursor: default;
+        }
+
+        /* Highlight when the field is in edit mode */
+        .editing-mode {
+            background-color: #333;
+            color: white;
+            cursor: pointer; /* Indicates the cell is editable */
+            border-color: #02b075; /* Highlight with a green border */
+            outline: none;
+            box-shadow: 0 0 10px 2px rgba(2, 176, 117, 0.7); /* Subtle shadow */
+        }
+
+        /* Highlight the currently active (focused) cell */
+        .editing-mode:focus {
+            background-color: #444; /* Darker background to indicate focus */
+            border-color: #02b075;
+            outline: none;
+            box-shadow: 0 0 10px 2px rgba(2, 176, 117, 0.7);
+        }
+
+/* Optional: Add a subtle animation for editing state transitions */
+.editing-mode {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+        /* Remove spinner (arrows) for number inputs */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+        /* Pill-style toggle switch */
+        .toggle-checkbox:checked + .toggle-bg {
+            background-color: #02b075;
+        }
+
+        .toggle-checkbox:checked + .toggle-bg + .dot {
+            transform: translateX(100%);
+        }
+
+        .toggle-bg {
+            background-color: #ccc;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Style for toggle switch */
+        .toggle-label {
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            position: relative;
+        }
+
+        .toggle-checkbox {
+            display: none;
+        }
+        /* Background color for the entire page */
+        body {
+            background-color: #18191b !important;
+            color: white;
+        }
+    
+        /* Navbar and Footer Color */
+        nav, footer {
+            background-color: #02b075;
+            color: black !important;
+            font-weight: 750;
+        }
+
+        /* Navbar link hover color */
+        nav a:hover {
+            color: white !important; /* Custom hover color */
+        }
+
+        /* Dropdown styling */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 150px;
+            background-color: #18191b ; /* Background color for dropdown */
+            border-radius: 0.375rem;
+            z-index: 1000;
+        }
+
+        .dropdown-menu a {
+            padding: 0.5rem 1rem;
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #029a63; /* Hover color for dropdown items */
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #02b075; /* Less transparency */
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+    
+        #mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: left;
+            transform: translateX(0%);
+            font-weight: 750;
+            font-size: x-large;
+        }
+    
+        /* Ensure hamburger button is visible on mobile and landscape mode */
+        @media (max-width: 1024px) {
+            #hamburger-btn {
+                display: block !important;
+                color: black;
+            }
+        }
+    
+        /* Hide desktop navigation on mobile, including landscape */
+        @media (max-width: 1024px) {
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+    
+        /* Profile card styling */
+        .profile-card {
+            background-color: #212224;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 100; /* Set a lower z-index to make sure dropdowns are above */
+            position: relative;
+        }
+    
+        /* Button styles */
+        .btn {
+            background-color: #02b075;
+            color: #2c2c2c;
+            font-weight: 750;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+    
+        .btn:hover {
+            background-color: #029a63;
+        }
+    
+        .btn-red {
+            background-color: #e3342f;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+    
+        .btn-red:hover {
+            background-color: #cc1f1a;
+        }
+    
+        /* Flash message styling */
+        .flash-container {
+            max-width: 600px; /* Set a max-width to ensure the flash messages don't span too wide */
+            margin-top: 20px; /* Add margin to push flash messages away from the navbar */
+            z-index: 999; /* Ensure it's positioned above other content */
+            position: relative;
+        }
+        .alert {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #02b075 !important;
+            color: white;
+        }
+
+        .alert-warning { background-color: #fbbf24 !important; color: #1c1c1c; }
+        .alert-success { background-color: #02b075 !important; color: white; }
+        .alert-danger  { background-color: #e3342f !important; color: white; }
+        .alert-error  { background-color: #e3342f !important; color: white; }
+        .alert-info    { background-color: #3490dc !important; color: white; }
+            
+        /* Footer styles */
+        .footer {
+            background-color: #02b075;
+            font-weight: 750;
+            color: black;
+            padding: 1em 2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .footer p, .footer a {
+            color: #2c2c2c;
+        }
+    
+        .footer a:hover {
+            color: #ffffff;
+        }
+    
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #212224;
+            border: 1px solid white; /* White border for the table */
+        }
+    
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid white; /* Gridlines in white */
+            color: white; /* Text color */
+        }
+    
+        th {
+            background-color: #333; /* Darker background for table headers */
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+    
+        td {
+            background-color: #212224; /* Profile card background color */
+        }
+    
+        tr:nth-child(even) {
+            background-color: #2b2c2e; /* Slightly darker background for even rows */
+        }
+    
+        tr:hover {
+            background-color: #3a3b3c; /* Hover effect for table rows */
+        }
+    
+        /* Button Styling Inside Table */
+        .table-btn {
+            padding: 8px 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+    
+        .table-btn.edit-btn {
+            background-color: #02b075;
+            color: black;
+        }
+    
+        .table-btn.delete-btn {
+            background-color: #e3342f;
+            color: white;
+        }
+    
+        .table-btn.edit-btn:hover {
+            background-color: #029a63;
+        }
+    
+        .table-btn.delete-btn:hover {
+            background-color: #cc1f1a;
+        }
+    
+        /* Modal styling */
+        #modal {
+            z-index: 9999 !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.75) !important;
+        }
+    
+        #modal .profile-card {
+            z-index: 10000 !important;
+            background-color: #212224;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add dropdown styles for desktop */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #02b075; /*drop down menu background color */
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-menu a:hover {
+            background-color: #029a63;
+            color: white;
+            transform: translateX(5px); /* Subtle horizontal movement */
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+    </style>
+    
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="{{ url_for('home') }}" class="text-2xl font-bold text-black">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="inline h-12 w-12 mr-2">
+                Guardian Development
+            </a>
+
+            <!-- Desktop Menu (hidden on mobile) -->
+            <div class="desktop-nav hidden md:flex space-x-6 relative">
+                {% if current_user.is_authenticated %}
+                    <!-- Dropdown for Manage Cars -->
+                    <div class="dropdown relative">
+                        <a href="#" class="hover:text-green-400">Add Record</a>
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Fuel</a>
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Maintenance</a>
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Mileage</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for View Records -->
+                    <div class="dropdown relative">
+                        <a href="#" class="hover:text-green-400">View Records</a>
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Fuel</a>
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Maintenance</a>
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Mileage</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Manage Cars -->
+                    <div class="dropdown relative">
+                        <a href="#" class="hover:text-green-400">Manage Cars</a>
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Add Car</a>
+                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Manage Cars</a>
+                        </div>
+                    </div>
+
+                    <!-- Inspections Dropdown -->
+                    {% if is_in_company %}
+                    <div class="dropdown relative">
+                        <a href="#" class="hover:text-green-400">Inspections</a>
+                        <div class="dropdown-menu">
+                            {% if has_permission('add records') or has_permission('admin') or current_user.is_company_owner() %}
+                                <a href="{{ url_for('home') }}" class="block py-2 px-4">Add Inspection</a>
+                            {% endif %}
+                            {% if has_permission('view records') %}
+                                <a href="{{ url_for('home') }}" class="block py-2 px-4">View Inspections</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Manage Garages and Dashboard -->
+                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Manage Garages</a>
+                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Reports</a>
+                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Dashboard</a>
+                    <a href="{{ url_for('home') }}" class="hover:text-red-400">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Login</a>
+                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Register</a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="hamburger-btn" class="md:hidden text-white text-3xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="bg-gray-800 text-black p-8 hidden">
+        <!-- Close Button -->
+        <button id="close-menu" class="text-black text-3xl focus:outline-none absolute top-4 right-6">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Menu Links -->
+        <div class="mt-12 flex flex-col space-y-4">
+            {% if current_user.is_authenticated %}
+                <!-- Mobile Dropdown for Add Records -->
+                <div>
+                    <button id="mobile-add-records" class="block py-2 text-lg">Add Records <i class="fas fa-chevron-down"></i></button>
+                    <div id="mobile-add-records-options" class="hidden flex flex-col pl-4">
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Fuel</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Maintenance</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Mileage</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Dropdown for View Records -->
+                <div>
+                    <button id="mobile-view-records" class="block py-2 text-lg">View Records <i class="fas fa-chevron-down"></i></button>
+                    <div id="mobile-view-records-options" class="hidden flex flex-col pl-4">
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Fuel</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Maintenance</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Mileage</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Dropdown for Manage Cars -->
+                <div>
+                    <button id="mobile-manage-cars" class="block py-2 text-lg">Manage Cars <i class="fas fa-chevron-down"></i></button>
+                    <div id="mobile-manage-cars-options" class="hidden flex flex-col pl-4">
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Add Car</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Manage Cars</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Inspections Dropdown -->
+                {% if is_in_company %}
+                <div>
+                    <button id="mobile-inspections" class="block py-2 text-lg">Inspections <i class="fas fa-chevron-down"></i></button>
+                    <div id="mobile-inspections-options" class="hidden flex flex-col pl-4">
+                        {% if has_permission('add records') or has_permission('admin') or current_user.is_company_owner() %}
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Add Inspection</a>
+                        {% endif %}
+                        {% if has_permission('view records') %}
+                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">View Inspections</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Other Links for Mobile -->
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Manage Garages</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Reports</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Dashboard</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tools</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg" style="color: white;">Logout</a>
+            {% else %}
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Login</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Flash Messages Section -->
+    <div class="flash-container mx-auto mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="space-y-4">
+                    {% for category, message in messages %} 
+                        <div class="alert alert-{{ category }} p-4 rounded text-center">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="container mx-auto py-8 px-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>
+            <p>Version 1.0.0</p>
+            <p>&copy; 2024 Guardian Development. All rights reserved.</p>
+            <p>Created by Yota</p>
+        </div>
+        <div class="flex flex-col items-center text-right">
+            <p>
+                <a href="{{ url_for('home') }}">Privacy Policy</a> |
+                <a href="{{ url_for('home') }}">Terms and Conditions</a> |
+                <a href="{{ url_for('home') }}">Cancellation Policy</a>
+            </p>
+            <div class="flex justify-center mt-2">
+                <a href="mailto:support@guardiandevelopment.net" class="text-gray-300 hover:text-white" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <span class="mx-2">|</span>
+                <a href="https://x.com/GuardianDev556" class="text-gray-300 hover:text-white" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <span class="mx-2">|</span>
+                <a href="https://discord.gg/FEMsZYQyQN" class="text-gray-300 hover:text-white" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS for Hamburger Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuBtn = document.getElementById('close-menu');
+    
+            const mobileManageCars = document.getElementById('mobile-manage-cars');
+            const mobileManageCarsOptions = document.getElementById('mobile-manage-cars-options');
+            const mobileAddRecords = document.getElementById('mobile-add-records');
+            const mobileAddRecordsOptions = document.getElementById('mobile-add-records-options');
+            const mobileViewRecords = document.getElementById('mobile-view-records');
+            const mobileViewRecordsOptions = document.getElementById('mobile-view-records-options');
+            const mobileInspections = document.getElementById('mobile-inspections');
+            const mobileInspectionsOptions = document.getElementById('mobile-inspections-options');
+
+            // Toggle mobile menu visibility
+            hamburgerBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                mobileMenu.classList.remove('hidden'); // Show the menu
+            });
+    
+            // Close mobile menu when the close button is clicked
+            closeMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenu.classList.add('hidden'); // Hide the menu
+            });
+    
+            // Toggle Add Records dropdown in mobile menu
+            mobileAddRecords.addEventListener('click', function() {
+                mobileAddRecordsOptions.classList.toggle('hidden');
+            });
+    
+            // Toggle View Records dropdown in mobile menu
+            mobileViewRecords.addEventListener('click', function() {
+                mobileViewRecordsOptions.classList.toggle('hidden');
+            });
+
+            // Toggle Manage Cars dropdown in mobile menu
+            mobileManageCars.addEventListener('click', function() {
+                mobileManageCarsOptions.classList.toggle('hidden');
+            });
+
+            // Toggle Inspections dropdown in mobile menu
+            mobileInspections.addEventListener('click', function() {
+                mobileInspectionsOptions.classList.toggle('hidden');
+            });
+    
+            // Function to check screen width and toggle hamburger visibility
+            function checkMobileMenu() {
+                const isMobile = window.innerWidth <= 1024; // Mobile and landscape mode
+                hamburgerBtn.style.display = isMobile ? 'block' : 'none';
+    
+                // Ensure mobile menu is hidden when resizing to desktop
+                if (!isMobile) {
+                    mobileMenu.classList.remove('active');
+                    mobileMenu.classList.add('hidden'); // Hide the mobile menu when in desktop
+                }
+            }
+    
+            // Run the check on window resize and when the page is fully loaded
+            window.addEventListener('resize', checkMobileMenu);
+            checkMobileMenu(); // Initial check when the page is loaded
+        });
+    </script>
+
+</body>
+</html>
