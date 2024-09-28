@@ -12,5 +12,45 @@ def inject_user():
 def home():
     return render_template('home.html')
 
+@app.route('/contact')
+def contact():
+    return render_template('home.html')
+
+@app.route('/fleetiq')
+def fleetiq():
+    return render_template('fleetiq.html')
+
+@app.route('/bots')
+def bots():
+    return render_template('bots.html')
+
+@app.route('/terms-of-service')
+def terms_of_service():
+    return render_template('terms_of_service.html')
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
+@app.route('/cancel-policy')
+def cancel_policy():
+    return render_template('cancel_policy.html')
+
+@app.route('/ark-guardian')
+def ark_guardian():
+    return render_template('ark-guardian.html')
+
+@app.route('/ark-pop')
+def ark_pop():
+    return render_template('ark-pop.html')
+
+@app.route('/guardian')
+def guardian():
+    return render_template('guardian.html')
+
+@app.route('/tickets')
+def tickets():
+    return render_template('tickets.html')
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=False, use_reloader=False)

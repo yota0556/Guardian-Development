@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8 px-4">
+
+    <!-- Hero Section -->
+    <div class="profile-card mb-8 bg-cover bg-center text-center" style="background-image: url('{{ url_for('static', filename='images/hero-banner.jpg') }}');">
+        <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-4xl font-bold mb-4">Welcome to FleetIQ</h1>
+            <p class="text-xl mb-4">
+                Your all-in-one solution for managing vehicle fleets and individual car maintenance.
+            </p>
+            <a href="https://fleet-iq.com/register" class="btn text-lg">Get Started</a>
+            <a href="https://fleet-iq.com/tools" class="btn text-lg">Useful Tools</a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="profile-card mb-8">
+        <h2 class="text-3xl font-bold mb-4 text-center">Our Features</h2>
+        <!-- For Desktop: Grid Layout -->
+        <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Mileage Tracking Feature -->
+            <div class="p-6 text-center hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                <i class="fas fa-road text-5xl mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Mileage Tracking</h3>
+                <p>Keep track of your vehicle's mileage with ease and accuracy.</p>
+                <img src="{{ url_for('static', filename='images/mileage-tracking.JPG') }}" alt="Mileage Tracking" class="mt-4 mx-auto w-full h-auto rounded-lg">
+            </div>
+
+            <!-- Fuel Management Feature -->
+            <div class="p-6 text-center hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                <i class="fas fa-gas-pump text-5xl mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Fuel Management</h3>
+                <p>Record and analyze your fuel consumption and costs effectively.</p>
+                <img src="{{ url_for('static', filename='images/fuel-management.JPG') }}" alt="Fuel Management" class="mt-4 mx-auto w-full h-auto rounded-lg">
+            </div>
+
+            <!-- Maintenance Logs Feature -->
+            <div class="p-6 text-center hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                <i class="fas fa-tools text-5xl mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Maintenance Logs</h3>
+                <p>Stay on top of your vehicle maintenance with detailed logs and reminders.</p>
+                <img src="{{ url_for('static', filename='images/maintenance-logs.JPG') }}" alt="Maintenance Logs" class="mt-4 mx-auto w-full h-auto rounded-lg">
+            </div>
+        </div>
+
+        <!-- For Mobile: Accordion Layout -->
+        <div class="block md:hidden">
+            <div id="features-accordion">
+                <!-- Mileage Tracking Feature -->
+                <div class="accordion-item mb-4 bg-[#212224] rounded-lg border border-white">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button flex justify-between items-center text-xl font-bold w-full text-left py-4 px-6 bg-[#212224] text-white hover:bg-gray-700 transition rounded-lg">
+                            <i class="fas fa-chevron-right transition-transform duration-300 mr-2"></i>
+                            <span class="flex-grow">Mileage Tracking</span>
+                        </button>
+                    </h3>
+                    <div class="accordion-body hidden px-6 py-4 bg-[#212224] text-white rounded-lg">
+                        <p>Keep track of your vehicle's mileage with ease and accuracy.</p>
+                        <img src="{{ url_for('static', filename='images/mileage-tracking.JPG') }}" alt="Mileage Tracking" class="mt-4 mx-auto w-full h-auto rounded-lg">
+                    </div>
+                </div>
+
+                <!-- Fuel Management Feature -->
+                <div class="accordion-item mb-4 bg-[#212224] rounded-lg border border-white">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button flex justify-between items-center text-xl font-bold w-full text-left py-4 px-6 bg-[#212224] text-white hover:bg-gray-700 transition rounded-lg">
+                            <i class="fas fa-chevron-right transition-transform duration-300 mr-2"></i>
+                            <span class="flex-grow">Fuel Management</span>
+                        </button>
+                    </h3>
+                    <div class="accordion-body hidden px-6 py-4 bg-[#212224] text-white rounded-lg">
+                        <p>Record and analyze your fuel consumption and costs effectively.</p>
+                        <img src="{{ url_for('static', filename='images/fuel-management.JPG') }}" alt="Fuel Management" class="mt-4 mx-auto w-full h-auto rounded-lg">
+                    </div>
+                </div>
+
+                <!-- Maintenance Logs Feature -->
+                <div class="accordion-item mb-4 bg-[#212224] rounded-lg border border-white">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button flex justify-between items-center text-xl font-bold w-full text-left py-4 px-6 bg-[#212224] text-white hover:bg-gray-700 transition rounded-lg">
+                            <i class="fas fa-chevron-right transition-transform duration-300 mr-2"></i>
+                            <span class="flex-grow">Maintenance Logs</span>
+                        </button>
+                    </h3>
+                    <div class="accordion-body hidden px-6 py-4 bg-[#212224] text-white rounded-lg">
+                        <p>Stay on top of your vehicle maintenance with detailed logs and reminders.</p>
+                        <img src="{{ url_for('static', filename='images/maintenance-logs.JPG') }}" alt="Maintenance Logs" class="mt-4 mx-auto w-full h-auto rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="profile-card mb-8">
+        <h2 class="text-3xl font-bold mb-4 text-center">Why Choose FleetIQ?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Comprehensive Reporting -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">Comprehensive Reporting</h3>
+                <p>Gain insights into vehicle usage, fuel efficiency, and maintenance costs with our comprehensive reporting tools.</p>
+                <img src="{{ url_for('static', filename='images/comprehensive-reporting.JPG') }}" 
+                    alt="Comprehensive Reporting" 
+                    class="mt-4 mx-auto w-full h-auto rounded-lg">
+            </div>
+            
+            <!-- User-Friendly Interface -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">User-Friendly Interface</h3>
+                <p>Our intuitive and user-friendly interface makes managing your fleet or personal vehicle a breeze.</p>
+                <img src="{{ url_for('static', filename='images/user-friendly-interface.JPG') }}" 
+                    alt="User-Friendly Interface" 
+                    class="mt-4 mx-auto w-full h-auto rounded-lg">
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="profile-card mb-8">
+        <h2 class="text-3xl font-bold mb-4 text-center">What Our Users Say</h2>
+        <div class="flex space-x-4 overflow-x-auto">
+            <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+                <p>"FleetIQ has completely transformed how we manage our fleet. The reports are invaluable!"</p>
+                <h3 class="mt-4 font-bold">- Alex D.</h3>
+            </div>
+            <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+                <p>"The maintenance tracking features save us so much time and effort. Highly recommended!"</p>
+                <h3 class="mt-4 font-bold">- Jamie L.</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="profile-card text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Optimize Your Fleet?</h2>
+        <p class="mb-4">Sign up today and take the first step towards efficient fleet management.</p>
+        <a href="https://fleet-iq.com/register" class="btn text-lg">Create an Account</a>
+    </div>
+
+</div>
+
+<!-- Accordion Toggle Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const accordionHeaders = document.querySelectorAll('.accordion-header button');
+
+        accordionHeaders.forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionBody = button.parentElement.nextElementSibling;
+                const arrowIcon = button.querySelector('i');
+
+                // Toggle visibility of the accordion body and rotate the arrow
+                if (accordionBody.classList.contains('hidden')) {
+                    accordionBody.classList.remove('hidden');
+                    accordionBody.classList.add('block');
+                    arrowIcon.style.transform = 'rotate(90deg)'; // Rotate arrow down
+                } else {
+                    accordionBody.classList.add('hidden');
+                    accordionBody.classList.remove('block');
+                    arrowIcon.style.transform = 'rotate(0deg)'; // Rotate arrow right
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

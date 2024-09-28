@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Our Bots{% endblock %}
+{% block content %}
+<div class="flex flex-col min-h-screen">
+    <!-- Main content container -->
+    <div class="container mx-auto py-10 flex-grow">
+        <h1 class="text-5xl font-bold text-center text-green-500 mb-6">Our Discord Bots</h1>
+        <p class="text-center text-lg text-gray-300 mb-10">
+            Explore our suite of Discord bots designed to simplify server management, provide real-time data, and streamline support.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+            <!-- Ark Guardian -->
+            <div class="profile-card">
+                <h2 class="text-3xl font-bold text-green-500 mb-4">Ark Guardian</h2>
+                <p class="text-gray-300 mb-4">
+                    Ark Guardian helps manage Nitrado Ark servers with ease, automating server management tasks and more.
+                </p>
+                <a href="{{ url_for('ark_guardian') }}" class="btn text-lg">Learn More</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=977371773425295430&permissions=8&scope=bot%20applications.commands" class="btn text-lg">Invite Ark Guardian</a>
+            </div>
+
+            <!-- Ark Pop -->
+            <div class="profile-card">
+                <h2 class="text-3xl font-bold text-green-500 mb-4">Ark Pop</h2>
+                <p class="text-gray-300 mb-4">
+                    Ark Pop provides real-time Ark server population data, helping players track server activity efficiently.
+                </p>
+                <a href="{{ url_for('ark_pop') }}" class="btn text-lg">Learn More</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=887837554374758420&permissions=8&scope=bot%20applications.commands" class="btn text-lg">Invite Ark Pop</a>
+            </div>
+
+            <!-- Guardian -->
+            <div class="profile-card">
+                <h2 class="text-3xl font-bold text-green-500 mb-4">Guardian</h2>
+                <p class="text-gray-300 mb-4">
+                    Guardian is a general-purpose Discord bot packed with features to manage and enhance your Discord server.
+                </p>
+                <a href="{{ url_for('guardian') }}" class="btn text-lg">Learn More</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=892487976540590090&permissions=1101928066118&scope=bot%20applications.commands" class="btn text-lg">Invite Guardian</a>
+            </div>
+
+            <!-- Tickets -->
+            <div class="profile-card">
+                <h2 class="text-3xl font-bold text-green-500 mb-4">Tickets</h2>
+                <p class="text-gray-300 mb-4">
+                    Tickets simplifies support by creating and managing support tickets directly within your Discord servers.
+                </p>
+                <a href="{{ url_for('tickets') }}" class="btn text-lg">Learn More</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=845389276937191495&permissions=2147871824&scope=bot%20applications.commands" class="btn text-lg">Invite Tickets</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

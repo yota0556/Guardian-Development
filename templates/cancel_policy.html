@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Cancellation Policy{% endblock %}
+{% block content %}
+
+<div class="flex flex-col items-center justify-center min-h-screen py-8" style="background-color: #18191b !important;">
+    <div class="w-full flex flex-col items-center" style="max-width: 1100px; margin: auto;">
+        <!-- Profile card structure for cancellation policy -->
+        <div class="profile-card shadow-lg p-8 rounded-lg bg-gray-800" style="width: 100%; max-width: 800px; margin: 20px auto;">
+            <h1 class="text-3xl font-semibold mb-6 text-teal-400">Cancellation Policy</h1>
+            <p class="text-gray-300 mb-6">
+                Effective Date: March 9, 2023
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-4 mb-2 text-white">1. Responsibility for Subscription Cancellation</h2>
+            <p class="text-gray-300">
+                It is your responsibility to manage and cancel your subscription. If you are unable to cancel via the Ark Guardian Discord Bot using the <strong>/subscription info</strong> command, you may contact us at <a href="mailto:support@guardiandevelopment.net" class="text-teal-400">support@guardiandevelopment.net</a> for assistance.
+            </p>
+            <p class="text-gray-300">
+                Additionally, you can join our support Discord at <a href="https://discord.gg/FEMsZYQyQN" class="text-teal-400">https://discord.gg/FEMsZYQyQN</a> for help with canceling a subscription.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-4 mb-2 text-white">2. Refund Policy</h2>
+            <p class="text-gray-300">
+                Refunds are granted solely at our discretion. You are not entitled to a refund if the failure to cancel your subscription was due to oversight on your part.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-4 mb-2 text-white">3. Charge Disputes</h2>
+            <p class="text-gray-300">
+                Disputing a charge through us, Stripe, or your financial institution may result in the immediate termination of access to our bots, products, or services.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-4 mb-2 text-white">4. Refund Denial Rights</h2>
+            <p class="text-gray-300">
+                We reserve the right to deny any refund request, for any reason.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-4 mb-2 text-white">5. Subscription Management</h2>
+            <p class="text-gray-300">
+                Please note, it is not our responsibility to manage your subscription on your behalf. You are solely responsible for ensuring that your subscription is properly managed and canceled as needed.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

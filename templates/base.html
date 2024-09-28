@@ -204,6 +204,40 @@
             z-index: 100; /* Set a lower z-index to make sure dropdowns are above */
             position: relative;
         }
+
+        /* Profile card title styling */
+        .profile-card h2 {
+            color: #02b075; /* Your preferred title color */
+        }
+
+        .profile-card h3 {
+            color: #02b075; /* Your preferred title color */
+        }
+
+        h2.text-2xl.font-semibold.text-center {
+            color: #02b075; /* Your preferred title color */
+        }
+
+        h1.text-3xl.font-bold.mb-8 {
+            color: #02b075; /* Your desired color */
+        }
+
+        /* Custom styles for the h3 element */
+        h3.text-teal-400 {
+            color: #02b075; /* Your desired color */
+        }
+
+        h4.text-2xl.font-semibold.mb-4 {
+            color: #02b075; /* Your desired color */
+        }
+
+        h6.text-teal-400 {
+            color: #02b075; /* Your desired color */
+        }
+
+        h1.text-3xl.font-semibold.mb-6.text-teal-400 {
+            color: #02b075; /* Replace with your desired color */
+        }
     
         /* Button styles */
         .btn {
@@ -400,61 +434,32 @@
             </a>
 
             <!-- Desktop Menu (hidden on mobile) -->
-            <div class="desktop-nav hidden md:flex space-x-6 relative">
-                {% if current_user.is_authenticated %}
-                    <!-- Dropdown for Manage Cars -->
-                    <div class="dropdown relative">
-                        <a href="#" class="hover:text-green-400">Add Record</a>
-                        <div class="dropdown-menu">
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Fuel</a>
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Maintenance</a>
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Mileage</a>
-                        </div>
+            <div class="desktop-nav hidden md:flex items-center ml-auto space-x-6">
+                <a href="{{ url_for('home') }}" class="hover:text-green-400">Home</a>
+                
+                <!-- Bots Dropdown -->
+                <div class="dropdown relative">
+                    <a href="#" class="hover:text-green-400">Bots</a>
+                    <div class="dropdown-menu">
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Guardian</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Pop</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Guardian</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Tickets</a>
                     </div>
+                </div>
+                
+                <!-- Docs Dropdown -->
+                <div class="dropdown relative">
+                    <a href="#" class="hover:text-green-400">Docs</a>
+                    <div class="dropdown-menu">
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Guardian</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Pop</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Guardian</a>
+                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Tickets</a>
+                    </div>
+                </div>
 
-                    <!-- Dropdown for View Records -->
-                    <div class="dropdown relative">
-                        <a href="#" class="hover:text-green-400">View Records</a>
-                        <div class="dropdown-menu">
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Fuel</a>
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Maintenance</a>
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Mileage</a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown for Manage Cars -->
-                    <div class="dropdown relative">
-                        <a href="#" class="hover:text-green-400">Manage Cars</a>
-                        <div class="dropdown-menu">
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Add Car</a>
-                            <a href="{{ url_for('home') }}" class="block py-2 px-4">Manage Cars</a>
-                        </div>
-                    </div>
-
-                    <!-- Inspections Dropdown -->
-                    {% if is_in_company %}
-                    <div class="dropdown relative">
-                        <a href="#" class="hover:text-green-400">Inspections</a>
-                        <div class="dropdown-menu">
-                            {% if has_permission('add records') or has_permission('admin') or current_user.is_company_owner() %}
-                                <a href="{{ url_for('home') }}" class="block py-2 px-4">Add Inspection</a>
-                            {% endif %}
-                            {% if has_permission('view records') %}
-                                <a href="{{ url_for('home') }}" class="block py-2 px-4">View Inspections</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% endif %}
-                    
-                    <!-- Manage Garages and Dashboard -->
-                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Manage Garages</a>
-                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Reports</a>
-                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Dashboard</a>
-                    <a href="{{ url_for('home') }}" class="hover:text-red-400">Logout</a>
-                {% else %}
-                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Login</a>
-                    <a href="{{ url_for('home') }}" class="hover:text-green-400">Register</a>
-                {% endif %}
+                <a href="{{ url_for('contact') }}" class="hover:text-green-400">Contact Us</a>
             </div>
 
             <!-- Mobile Hamburger Button -->
@@ -471,63 +476,35 @@
             <i class="fas fa-times"></i>
         </button>
 
-        <!-- Menu Links -->
         <div class="mt-12 flex flex-col space-y-4">
-            {% if current_user.is_authenticated %}
-                <!-- Mobile Dropdown for Add Records -->
-                <div>
-                    <button id="mobile-add-records" class="block py-2 text-lg">Add Records <i class="fas fa-chevron-down"></i></button>
-                    <div id="mobile-add-records-options" class="hidden flex flex-col pl-4">
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Fuel</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Maintenance</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Mileage</a>
-                    </div>
-                </div>
+            <a href="{{ url_for('home') }}" class="block py-2 text-lg">Home</a>
+        </div>
 
-                <!-- Mobile Dropdown for View Records -->
-                <div>
-                    <button id="mobile-view-records" class="block py-2 text-lg">View Records <i class="fas fa-chevron-down"></i></button>
-                    <div id="mobile-view-records-options" class="hidden flex flex-col pl-4">
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Fuel</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Maintenance</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Mileage</a>
-                    </div>
-                </div>
+        <!-- Bots Dropdown -->
+        <div>
+            <button id="mobile-add-records" class="block py-2 text-lg">Bots <i class="fas fa-chevron-down"></i></button>
+            <div id="mobile-add-records-options" class="hidden flex flex-col pl-4">
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Guardian</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Pop</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Guardian</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tickets</a>
+            </div>
+        </div>
 
-                <!-- Mobile Dropdown for Manage Cars -->
-                <div>
-                    <button id="mobile-manage-cars" class="block py-2 text-lg">Manage Cars <i class="fas fa-chevron-down"></i></button>
-                    <div id="mobile-manage-cars-options" class="hidden flex flex-col pl-4">
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Add Car</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Manage Cars</a>
-                    </div>
-                </div>
+        <!-- Docs Dropdown -->
+        <div>
+            <button id="mobile-view-records" class="block py-2 text-lg">Docs <i class="fas fa-chevron-down"></i></button>
+            <div id="mobile-view-records-options" class="hidden flex flex-col pl-4">
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Guardian</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Pop</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Guardian</a>
+                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tickets</a>
+            </div>
+        </div>
 
-                <!-- Mobile Inspections Dropdown -->
-                {% if is_in_company %}
-                <div>
-                    <button id="mobile-inspections" class="block py-2 text-lg">Inspections <i class="fas fa-chevron-down"></i></button>
-                    <div id="mobile-inspections-options" class="hidden flex flex-col pl-4">
-                        {% if has_permission('add records') or has_permission('admin') or current_user.is_company_owner() %}
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">Add Inspection</a>
-                        {% endif %}
-                        {% if has_permission('view records') %}
-                        <a href="{{ url_for('home') }}" class="block py-2 text-lg">View Inspections</a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
-                
-                <!-- Other Links for Mobile -->
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Manage Garages</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Reports</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Dashboard</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tools</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg" style="color: white;">Logout</a>
-            {% else %}
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Login</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Register</a>
-            {% endif %}
+        <!-- Menu Links -->
+        <div class="flex flex-col space-y-4">
+            <a href="{{ url_for('contact') }}" class="block py-2 text-lg">Contact Us</a>
         </div>
     </div>
 
@@ -560,9 +537,9 @@
         </div>
         <div class="flex flex-col items-center text-right">
             <p>
-                <a href="{{ url_for('home') }}">Privacy Policy</a> |
-                <a href="{{ url_for('home') }}">Terms and Conditions</a> |
-                <a href="{{ url_for('home') }}">Cancellation Policy</a>
+                <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a> |
+                <a href="{{ url_for('terms_of_service') }}">Terms and Conditions</a> |
+                <a href="{{ url_for('cancel_policy') }}">Cancellation Policy</a>
             </p>
             <div class="flex justify-center mt-2">
                 <a href="mailto:support@guardiandevelopment.net" class="text-gray-300 hover:text-white" aria-label="Email"><i class="fas fa-envelope"></i></a>
@@ -574,71 +551,54 @@
         </div>
     </footer>
 
-    <!-- JS for Hamburger Menu -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const closeMenuBtn = document.getElementById('close-menu');
+<!-- JS for Hamburger Menu -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
     
-            const mobileManageCars = document.getElementById('mobile-manage-cars');
-            const mobileManageCarsOptions = document.getElementById('mobile-manage-cars-options');
-            const mobileAddRecords = document.getElementById('mobile-add-records');
-            const mobileAddRecordsOptions = document.getElementById('mobile-add-records-options');
-            const mobileViewRecords = document.getElementById('mobile-view-records');
-            const mobileViewRecordsOptions = document.getElementById('mobile-view-records-options');
-            const mobileInspections = document.getElementById('mobile-inspections');
-            const mobileInspectionsOptions = document.getElementById('mobile-inspections-options');
+        const mobileAddRecords = document.getElementById('mobile-add-records');
+        const mobileAddRecordsOptions = document.getElementById('mobile-add-records-options');
+        const mobileViewRecords = document.getElementById('mobile-view-records');
+        const mobileViewRecordsOptions = document.getElementById('mobile-view-records-options');
 
-            // Toggle mobile menu visibility
-            hamburgerBtn.addEventListener('click', function() {
-                mobileMenu.classList.add('active');
-                mobileMenu.classList.remove('hidden'); // Show the menu
-            });
-    
-            // Close mobile menu when the close button is clicked
-            closeMenuBtn.addEventListener('click', function() {
-                mobileMenu.classList.remove('active');
-                mobileMenu.classList.add('hidden'); // Hide the menu
-            });
-    
-            // Toggle Add Records dropdown in mobile menu
-            mobileAddRecords.addEventListener('click', function() {
-                mobileAddRecordsOptions.classList.toggle('hidden');
-            });
-    
-            // Toggle View Records dropdown in mobile menu
-            mobileViewRecords.addEventListener('click', function() {
-                mobileViewRecordsOptions.classList.toggle('hidden');
-            });
-
-            // Toggle Manage Cars dropdown in mobile menu
-            mobileManageCars.addEventListener('click', function() {
-                mobileManageCarsOptions.classList.toggle('hidden');
-            });
-
-            // Toggle Inspections dropdown in mobile menu
-            mobileInspections.addEventListener('click', function() {
-                mobileInspectionsOptions.classList.toggle('hidden');
-            });
-    
-            // Function to check screen width and toggle hamburger visibility
-            function checkMobileMenu() {
-                const isMobile = window.innerWidth <= 1024; // Mobile and landscape mode
-                hamburgerBtn.style.display = isMobile ? 'block' : 'none';
-    
-                // Ensure mobile menu is hidden when resizing to desktop
-                if (!isMobile) {
-                    mobileMenu.classList.remove('active');
-                    mobileMenu.classList.add('hidden'); // Hide the mobile menu when in desktop
-                }
-            }
-    
-            // Run the check on window resize and when the page is fully loaded
-            window.addEventListener('resize', checkMobileMenu);
-            checkMobileMenu(); // Initial check when the page is loaded
+        // Toggle mobile menu visibility
+        hamburgerBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            mobileMenu.classList.remove('hidden'); // Show the menu
         });
-    </script>
 
-</body>
-</html>
+        // Close mobile menu when the close button is clicked
+        closeMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            mobileMenu.classList.add('hidden'); // Hide the menu
+        });
+
+        // Toggle Bots dropdown in mobile menu
+        mobileAddRecords.addEventListener('click', function() {
+            mobileAddRecordsOptions.classList.toggle('hidden');
+        });
+
+        // Toggle Docs dropdown in mobile menu
+        mobileViewRecords.addEventListener('click', function() {
+            mobileViewRecordsOptions.classList.toggle('hidden');
+        });
+
+        // Function to check screen width and toggle hamburger visibility
+        function checkMobileMenu() {
+            const isMobile = window.innerWidth <= 1024; // Mobile and landscape mode
+            hamburgerBtn.style.display = isMobile ? 'block' : 'none';
+
+            // Ensure mobile menu is hidden when resizing to desktop
+            if (!isMobile) {
+                mobileMenu.classList.remove('active');
+                mobileMenu.classList.add('hidden'); // Hide the mobile menu when in desktop
+            }
+        }
+
+        // Run the check on window resize and when the page is fully loaded
+        window.addEventListener('resize', checkMobileMenu);
+        checkMobileMenu(); // Initial check when the page is loaded
+    });
+</script>
