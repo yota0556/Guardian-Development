@@ -1,7 +1,14 @@
 from flask import Flask, render_template
 from flask_login import login_user, logout_user, current_user, login_required
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__, static_url_path="/static")
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
+
+google_form_url = os.getenv('YOUR_GOOGLE_FORM_URL')
 
 @app.context_processor
 def inject_user():
@@ -14,7 +21,7 @@ def home():
 
 @app.route('/contact')
 def contact():
-    return render_template('home.html')
+     return render_template('contact.html', google_form_url=google_form_url)
 
 @app.route('/fleetiq')
 def fleetiq():
