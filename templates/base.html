@@ -441,10 +441,10 @@
                 <div class="dropdown relative">
                     <a href="#" class="hover:text-green-400">Bots</a>
                     <div class="dropdown-menu">
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Guardian</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Pop</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Guardian</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Tickets</a>
+                        <a href="{{ url_for('ark_guardian') }}" class="block py-2 px-4">Ark Guardian</a>
+                        <a href="{{ url_for('ark_pop') }}" class="block py-2 px-4">Ark Pop</a>
+                        <a href="{{ url_for('guardian') }}" class="block py-2 px-4">Guardian</a>
+                        <a href="{{ url_for('tickets') }}" class="block py-2 px-4">Tickets</a>
                     </div>
                 </div>
                 
@@ -452,10 +452,10 @@
                 <div class="dropdown relative">
                     <a href="#" class="hover:text-green-400">Docs</a>
                     <div class="dropdown-menu">
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Guardian</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Ark Pop</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Guardian</a>
-                        <a href="{{ url_for('home') }}" class="block py-2 px-4">Tickets</a>
+                        <a href="{{ url_for('ark_guardian_docs') }}" class="block py-2 px-4">Ark Guardian</a>
+                        <a href="{{ url_for('ark_pop_docs') }}" class="block py-2 px-4">Ark Pop</a>
+                        <a href="{{ url_for('guardian_docs') }}" class="block py-2 px-4">Guardian</a>
+                        <a href="{{ url_for('tickets_docs') }}" class="block py-2 px-4">Tickets</a>
                     </div>
                 </div>
 
@@ -484,10 +484,10 @@
         <div>
             <button id="mobile-add-records" class="block py-2 text-lg">Bots <i class="fas fa-chevron-down"></i></button>
             <div id="mobile-add-records-options" class="hidden flex flex-col pl-4">
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Guardian</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Pop</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Guardian</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tickets</a>
+                <a href="{{ url_for('ark_guardian') }}" class="block py-2 text-lg">Ark Guardian</a>
+                <a href="{{ url_for('ark_pop') }}" class="block py-2 text-lg">Ark Pop</a>
+                <a href="{{ url_for('guardian') }}" class="block py-2 text-lg">Guardian</a>
+                <a href="{{ url_for('tickets') }}" class="block py-2 text-lg">Tickets</a>
             </div>
         </div>
 
@@ -495,10 +495,10 @@
         <div>
             <button id="mobile-view-records" class="block py-2 text-lg">Docs <i class="fas fa-chevron-down"></i></button>
             <div id="mobile-view-records-options" class="hidden flex flex-col pl-4">
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Guardian</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Ark Pop</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Guardian</a>
-                <a href="{{ url_for('home') }}" class="block py-2 text-lg">Tickets</a>
+                <a href="{{ url_for('ark_guardian_docs') }}" class="block py-2 text-lg">Ark Guardian</a>
+                <a href="{{ url_for('ark_pop_docs') }}" class="block py-2 text-lg">Ark Pop</a>
+                <a href="{{ url_for('guardian_docs') }}" class="block py-2 text-lg">Guardian</a>
+                <a href="{{ url_for('tickets_docs') }}" class="block py-2 text-lg">Tickets</a>
             </div>
         </div>
 
@@ -538,7 +538,7 @@
         <div class="flex flex-col items-center text-right">
             <p>
                 <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a> |
-                <a href="{{ url_for('terms_of_service') }}">Terms and Conditions</a> |
+                <a href="{{ url_for('terms_of_service') }}">Terms & Conditions</a> |
                 <a href="{{ url_for('cancel_policy') }}">Cancellation Policy</a>
             </p>
             <div class="flex justify-center mt-2">

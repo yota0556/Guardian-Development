@@ -59,5 +59,25 @@ def guardian():
 def tickets():
     return render_template('tickets.html')
 
+@app.route('/docs/ark-guardian')
+def ark_guardian_docs():
+    return render_template('ag-docs.html')
+
+@app.route('/docs/ark-pop')
+def ark_pop_docs():
+    return render_template('ap-docs.html')
+
+@app.route('/docs/guardian')
+def guardian_docs():
+    return render_template('g-docs.html')
+
+@app.route('/docs/tickets')
+def tickets_docs():
+    return render_template('t-docs.html')
+
+@app.route('/docs')
+def docs():
+    return render_template('docs.html')
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=False, use_reloader=False)
